@@ -2,7 +2,7 @@
 
 
 
-RigidBody::RigidBody(eShapeType shapeID, glm::vec2 position, glm::vec2 velocity, float rotation, float mass, float elasticity) : PhysicsObject(shapeID)
+RigidBody::RigidBody(eShapeType shapeID, glm::vec2 position, glm::vec2 velocity, float rotation, float mass, float elasticity, float linearDrag, float angularDrag) : PhysicsObject(shapeID)
 {
 	m_ShapeID = shapeID;
 	m_currPos = position;
@@ -10,6 +10,8 @@ RigidBody::RigidBody(eShapeType shapeID, glm::vec2 position, glm::vec2 velocity,
 	m_roation = rotation;
 	m_mass = mass;
 	m_elasticity = elasticity;
+	m_linearDrag = linearDrag;
+	m_angularDrag = m_angularDrag;
 }
 
 RigidBody::~RigidBody()
@@ -20,6 +22,26 @@ void RigidBody::fixedUpdate(glm::vec2 gravity, float timeStep)
 {
 	applyForce(gravity * m_mass * timeStep);
 	m_currPos += m_velocity * timeStep;
+
+	if (m_linearDrag > 0)
+	{
+		m_velocity -= m_velocity * m_linearDrag * timeStep;
+
+		if (glm::length(m_velocity) < 0.01f)
+		{
+			m_velocity = glm::vec2(0, 0);
+		}
+	}
+
+	if (m_angularDrag > 0)
+	{
+		m_angularVelocity -= m_angularVelocity * m_angularDrag * timeStep;
+
+		if (glm::abs(m_angularVelocity) < 0.01f)
+		{
+			m_angularVelocity = 0;
+		}
+	}
 }
 
 void RigidBody::applyForce(glm::vec2 force)

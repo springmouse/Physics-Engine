@@ -7,7 +7,7 @@ class RigidBody :
 {
 public:
 	RigidBody(eShapeType shapeID, glm::vec2 position, glm::vec2 velocity,
-		float rotation, float mass, float elasticity);
+		float rotation, float mass, float elasticity, float linearDrag, float angularDrag);
 	~RigidBody();
 
 	virtual void fixedUpdate(glm::vec2 gravity, float timeStep);
@@ -29,5 +29,10 @@ protected:
 	glm::vec2 m_velocity;
 	float m_mass;
 	float m_elasticity;
+
+	float m_angularVelocity;
+
+	float m_linearDrag;
+	float m_angularDrag;
 };
 

@@ -6,7 +6,7 @@ class Box :
 	public RigidBody
 {
 public:
-	Box(glm::vec2 center, float length, float height, glm::vec2 velocity, float rotation, float mass, float elasticity, glm::vec4 colour);
+	Box(glm::vec2 center, float length, float height, glm::vec2 velocity, float rotation, float mass, float elasticity, float linearDrag, float angularDrag, glm::vec4 colour);
 
 	~Box();
 
