@@ -25,7 +25,7 @@ GameLoop::~GameLoop()
 void GameLoop::Init()
 {
 	m_physicsScene = new PhysicsScene();
-	m_physicsScene->constructor( 0.01f, glm::vec2(0.0f, -274));
+	m_physicsScene->constructor( 0.01f, glm::vec2(0.0f, -9.8f));
 
 	Sphere * ball1 = new Sphere(glm::vec2(-50, 0),	glm::vec2(11.11f, 0),	80, 3, 1, 0, 0.9f, glm::vec4(1,0,0,1));
 	Sphere * ball2 = new Sphere(glm::vec2(50, 2),	glm::vec2(-15, 0),		80, 3, 1, 0, 0.9f, glm::vec4(0, 1, 0, 1));

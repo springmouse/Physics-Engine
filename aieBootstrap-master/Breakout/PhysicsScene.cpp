@@ -122,7 +122,7 @@ void PhysicsScene::debugScene()
 void PhysicsScene::checkForCollision()
 {
 
-	int actorCount = m_actors.size();
+	int actorCount = (int)m_actors.size();
 
 	for (int outer = 0; outer < actorCount - 1; outer++)
 	{
