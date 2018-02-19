@@ -25,7 +25,7 @@ public:
 
 	const glm::vec2 getExtends() { return m_extends; }
 
-	bool checkBoxCorners(Box& box, glm::vec2& contact, int & numContacts, float& pen, glm::vec2& edgeNormal);
+	bool checkBoxCorners(Box& box, glm::vec2& contact, int & numContacts, glm::vec2& edgeNormal, glm::vec2 & contactForce);
 
 protected:
 	glm::vec2 m_extends;

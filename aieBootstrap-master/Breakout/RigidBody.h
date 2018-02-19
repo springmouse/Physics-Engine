@@ -14,6 +14,8 @@ public:
 	virtual void debug() {};
 	void applyForce(glm::vec2 force, glm::vec2 pos);
 
+	void setPosition(glm::vec2 pos) { m_currPos = pos; }
+
 	void setKinematic(bool state) { m_isKinematic = state; }
 	bool isKinematic() { return m_isKinematic; }
 

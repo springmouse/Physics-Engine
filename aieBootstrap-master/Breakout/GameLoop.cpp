@@ -41,11 +41,11 @@ void GameLoop::Init()
 	m_physicsScene->addActor(ball5);
 	m_physicsScene->addActor(ball6);
 
-	Box * box1 = new Box(glm::vec2(-10, 0), 5, 5, glm::vec2(5, 0),	1, 20, 0.1f, 0, 1, glm::vec4(0, 0, 1, 1));
-	Box * box2 = new Box(glm::vec2(10, 10), 5, 5, glm::vec2(-5, 0), 1, 20, 1, 0, 0, glm::vec4(0, 1, 1, 1));
+	//Box * box1 = new Box(glm::vec2(-10, 0), 5, 5, glm::vec2(5, 0),	1, 20, 0.1f, 0, 1, glm::vec4(0, 0, 1, 1));
+	//Box * box2 = new Box(glm::vec2(10, 10), 5, 5, glm::vec2(-5, 0), 1, 20, 1, 0, 0, glm::vec4(0, 1, 1, 1));
 
-	m_physicsScene->addActor(box1);
-	m_physicsScene->addActor(box2);
+	//m_physicsScene->addActor(box1);
+	//m_physicsScene->addActor(box2);
 
 	Plane * plane = new Plane(glm::vec2(0, -1), 35, glm::vec4(0,1,1,1));
 	Plane * plane1 = new Plane(glm::vec2(0, -1), -35, glm::vec4(0, 1, 1, 1));
