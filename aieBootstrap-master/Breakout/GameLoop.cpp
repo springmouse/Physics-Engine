@@ -27,12 +27,12 @@ void GameLoop::Init()
 	m_physicsScene = new PhysicsScene();
 	m_physicsScene->constructor( 0.01f, glm::vec2(0.0f, -9.8f));
 
-	Sphere * ball1 = new Sphere(glm::vec2(-50, 0),	glm::vec2(11.11f, 0),	80, 3, 1, 0, 0.9f, glm::vec4(1,0,0,1));
-	Sphere * ball2 = new Sphere(glm::vec2(50, 2),	glm::vec2(-15, 0),		80, 3, 1, 0, 0.9f, glm::vec4(0, 1, 0, 1));
-	Sphere * ball3 = new Sphere(glm::vec2(25, 30),	glm::vec2(5, 15),		80, 3, 1, 0, 0.9f, glm::vec4(1, 1, 0, 1));
-	Sphere * ball4 = new Sphere(glm::vec2(55, 20),	glm::vec2(-2, -20),		80, 3, 1, 0, 0.9f, glm::vec4(0, 1, 1, 1));
-	Sphere * ball5 = new Sphere(glm::vec2(-30, 12), glm::vec2(4, 8),		80, 3, 1, 0, 0.9f, glm::vec4(1, 0, 1, 1));
-	Sphere * ball6 = new Sphere(glm::vec2(-45, 20), glm::vec2(11, -7),		80, 3, 1, 0, 0.9f, glm::vec4(0.5f, 1, 0.5f, 1));
+	Sphere * ball1 = new Sphere(glm::vec2(-50, 0),	glm::vec2(11.11f, 0),	80, 3, 1, 0, 0, 0, glm::vec4(1, 0, 0, 1));
+	Sphere * ball2 = new Sphere(glm::vec2(50, 2),	glm::vec2(-15, 0),		80, 3, 1, 0, 0, 0, glm::vec4(0, 1, 0, 1));
+	Sphere * ball3 = new Sphere(glm::vec2(25, 30),	glm::vec2(5, 15),		80, 3, 1, 0, 0, 0, glm::vec4(1, 1, 0, 1));
+	Sphere * ball4 = new Sphere(glm::vec2(55, 20),	glm::vec2(-2, -20),		80, 3, 1, 0, 0, 0, glm::vec4(0, 1, 1, 1));
+	Sphere * ball5 = new Sphere(glm::vec2(-30, 12), glm::vec2(4, 8),		80, 3, 1, 0, 0, 0, glm::vec4(1, 0, 1, 1));
+	Sphere * ball6 = new Sphere(glm::vec2(-45, 20), glm::vec2(11, -7),		80, 3, 1, 0, 0, 0, glm::vec4(0.5f, 1, 0.5f, 1));
 
 	m_physicsScene->addActor(ball1);
 	m_physicsScene->addActor(ball2);
@@ -41,8 +41,8 @@ void GameLoop::Init()
 	m_physicsScene->addActor(ball5);
 	m_physicsScene->addActor(ball6);
 
-	Box * box1 = new Box(glm::vec2(-10, 0), 5, 5, glm::vec2(5, 0),	1, 20, 1, 0, 0.9f, glm::vec4(0,0,1,1));
-	Box * box2 = new Box(glm::vec2(10, 10), 5, 5, glm::vec2(-5, 0), 1, 20, 1, 0, 0.9f, glm::vec4(0, 1, 1, 1));
+	Box * box1 = new Box(glm::vec2(-10, 0), 5, 5, glm::vec2(5, 0),	1, 20, 0.1f, 0, 1, glm::vec4(0, 0, 1, 1));
+	Box * box2 = new Box(glm::vec2(10, 10), 5, 5, glm::vec2(-5, 0), 1, 20, 1, 0, 0, glm::vec4(0, 1, 1, 1));
 
 	m_physicsScene->addActor(box1);
 	m_physicsScene->addActor(box2);

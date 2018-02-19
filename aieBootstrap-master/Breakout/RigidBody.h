@@ -12,17 +12,21 @@ public:
 
 	virtual void fixedUpdate(glm::vec2 gravity, float timeStep);
 	virtual void debug() {};
-	void applyForce(glm::vec2 force);
-	void applyForceToActor(RigidBody * actor2, glm::vec2 force);
+	void applyForce(glm::vec2 force, glm::vec2 pos);
 
-	void resolveCollision(RigidBody * actor2);
+	void setKinematic(bool state) { m_isKinematic = state; }
+	bool isKinematic() { return m_isKinematic; }
+
+	void resolveCollision(RigidBody * actor2, glm::vec2 contact, glm::vec2 * collisionNormal = nullptr);
 
 	virtual bool checkCollision(PhysicsObject * pOther) = 0;
 
 	float getRotation() { return m_roation; }
+	float getAngularVelocity() { return m_angularVelocity; }
 	glm::vec2 getVelocity() { return m_velocity; }
-	float getMass() { return m_mass; }
+	float getMass() { return (m_isKinematic) ? 100000 : m_mass; }
 	float getElasticity() { return m_elasticity; }
+	float getMoment() { return m_moment; }
 
 protected:
 	float m_roation;
@@ -30,9 +34,13 @@ protected:
 	float m_mass;
 	float m_elasticity;
 
+	bool m_isKinematic;
+
 	float m_angularVelocity;
 
 	float m_linearDrag;
 	float m_angularDrag;
+
+	float m_moment;
 };
 
