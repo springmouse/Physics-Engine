@@ -1,6 +1,7 @@
 #pragma once
 
 #include "PhysicsObject.h"
+//#define Max_Int 
 
 class RigidBody :
 	public PhysicsObject
@@ -26,7 +27,7 @@ public:
 	float getRotation() { return m_roation; }
 	float getAngularVelocity() { return m_angularVelocity; }
 	glm::vec2 getVelocity() { return m_velocity; }
-	float getMass() { return (m_isKinematic) ? 100000 : m_mass; }
+	float getMass() { return (m_isKinematic) ? INT_MAX : m_mass; }
 	float getElasticity() { return m_elasticity; }
 	float getMoment() { return m_moment; }
 

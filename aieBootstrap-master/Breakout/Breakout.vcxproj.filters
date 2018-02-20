@@ -48,6 +48,9 @@
     <ClCompile Include="Sphere.cpp">
       <Filter>Physic Classes\Shapes</Filter>
     </ClCompile>
+    <ClCompile Include="Spring.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="RigidBody.h">
@@ -73,6 +76,9 @@
     </ClInclude>
     <ClInclude Include="BreakoutApp.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Spring.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

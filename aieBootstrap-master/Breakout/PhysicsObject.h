@@ -5,6 +5,7 @@
 
 enum eShapeType
 {
+	JOINT = -1,
 	PLANE = 0,
 	SPHERE = 1,
 	BOX = 2

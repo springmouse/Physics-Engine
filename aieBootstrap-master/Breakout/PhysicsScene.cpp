@@ -127,6 +127,11 @@ void PhysicsScene::checkForCollision()
 			int shapeId1 = object1->getShapeID();
 			int shapeId2 = object2->getShapeID();
 
+			if (shapeId1 < 0 || shapeId2 < 0)
+			{
+				continue;
+			}
+
 			int functionIdx = (shapeId1 * SHAPE_COUNT) + shapeId2;
 			fn collisionFunctionPointer = collisionFunctionArray[functionIdx];
 			if (collisionFunctionArray != nullptr)
@@ -157,10 +162,14 @@ bool PhysicsScene::plane2Sphere(PhysicsObject * ObjectA, PhysicsObject * ObjectB
 		float intersection = sphere->getRadius() - sphereToPlane;
 		if (intersection > 0)
 		{
-			// contact force 
-			//sphere->setPosition(sphere->getPos() + plane->getNormal() * (sphere->getRadius() - sphereToPlane));
-
 			glm::vec2 contact = sphere->getPos() + (collisionNormal * -sphere->getRadius());
+			if (sphere->isKinematic() == false)
+			{
+				// contact force 
+				//sphere->setPosition(sphere->getPos() + plane->getNormal() * (sphere->getRadius() - sphereToPlane));
+				return true;
+			}
+
 			plane->resolveCollision(sphere, contact);
 			return true;
 		}
@@ -250,9 +259,13 @@ bool PhysicsScene::plane2Box(PhysicsObject * ObjectA, PhysicsObject * ObjectB)
 
 			float mass0 = 1.0f / (1.0 / box->getMass() + (r * r) / box->getMoment());
 
-			box->applyForce(acceleration * mass0, localContact);
+			if (box->isKinematic() == false)
+			{
+				//box->setPosition(box->getPos() - plane->getNormal() * penetration);
+			}
 
-			//box->setPosition(box->getPos() - plane->getNormal() * penetration);
+			box->applyForce(acceleration * mass0, localContact);
+			return true;
 		}
 	}
 
@@ -278,12 +291,13 @@ bool PhysicsScene::sphere2Plane(PhysicsObject * ObjectA, PhysicsObject * ObjectB
 		float intersection = sphere->getRadius() - sphereToPlane;
 		if (intersection > 0)
 		{
-			// contact force 
-			//sphere->setPosition(sphere->getPos() + plane->getNormal() * (sphere->getRadius() - sphereToPlane));
-
+			if (sphere->isKinematic() == false)
+			{
+				//contact force 
+				//sphere->setPosition(sphere->getPos() + plane->getNormal() * (sphere->getRadius() - sphereToPlane));
+			}
 			glm::vec2 contact = sphere->getPos() + (collisionNormal * -sphere->getRadius());
 			plane->resolveCollision(sphere, contact);
-			return true;
 		}
 	}
 	return false;
@@ -303,13 +317,23 @@ bool PhysicsScene::sphere2Sphere(PhysicsObject * ObjectA, PhysicsObject * Object
 		if (intersection > 0) 
 		{
 			glm::vec2 contactForce = 0.5f * (distance - (sphere1->getRadius() + sphere2->getRadius()))*delta / distance;
-			sphere1->setPosition(sphere1->getPos() + contactForce);
-			sphere2->setPosition(sphere2->getPos() - contactForce);
+
+			if (sphere1->isKinematic() == false && sphere2->isKinematic() == false)
+			{
+				//sphere1->setPosition(sphere1->getPos() + contactForce);
+				//sphere2->setPosition(sphere2->getPos() - contactForce);
+			}
+			else if (sphere1->isKinematic() == false)
+			{
+				//sphere1->setPosition(sphere1->getPos() + contactForce);
+			}
+			else
+			{
+				//sphere2->setPosition(sphere2->getPos() - contactForce);
+			}
 
 			// respond to the collision 
 			sphere1->resolveCollision(sphere2, 0.5f * (sphere1->getPos() + sphere2->getPos()));
-
-			return true;
 		}
 	}
 
@@ -337,7 +361,8 @@ bool PhysicsScene::sphere2Box(PhysicsObject * ObjectA, PhysicsObject * ObjectB)
 
 		glm::vec2 circlePos = sphere->getPos() - box->getPos();
 		float w2 = box->getWidth() / 2, h2 = box->getHeight() / 2;
-		int numContacts = 0; glm::vec2 contact(0, 0);
+		int numContacts = 0; 
+		glm::vec2 contact(0, 0);
 
 		// contact is in our box coordinates 
 		// check the four corners to see if any of them are inside the circle 
@@ -384,8 +409,29 @@ bool PhysicsScene::sphere2Box(PhysicsObject * ObjectA, PhysicsObject * ObjectB)
 
 				if (numContacts > 0)
 				{
-					// average, and convert back into world coords 
+					// average, and convert back into world coords; 
 					contact = box->getPos() + (1.0f / numContacts) * (box->getLocalX() *contact.x + box->getLocalY()*contact.y);
+
+					// with the contact point we can find a penetration vector 
+					float pen = sphere->getRadius() - glm::length(contact - sphere->getPos());
+
+					glm::vec2 penVec = glm::normalize(contact - sphere->getPos()) * pen; 
+
+					// move each shape away in the direction of penitration
+					if (!box->isKinematic() && !sphere->isKinematic())
+					{ 
+						//box->setPosition(box->getPos() + penVec*0.5f); 
+						//sphere->setPosition(sphere->getPos() - penVec*0.5f); 
+					} 
+					else if (!box->isKinematic()) 
+					{ 
+						//box->setPosition(box->getPos() + penVec); 
+					} 
+					else 
+					{ 
+						//sphere->setPosition(sphere->getPos() - penVec); 
+					} 
+
 					box->resolveCollision(sphere, contact, direction);
 				}
 
@@ -480,9 +526,14 @@ bool PhysicsScene::box2Plane(PhysicsObject * ObjectA, PhysicsObject * ObjectB)
 
 			float mass0 = 1.0f / (1.0 / box->getMass() + (r * r) / box->getMoment());
 
-			box->applyForce(acceleration * mass0, localContact);
+			if (!box->isKinematic())
+			{
+				//box->setPosition(box->getPos() - plane->getNormal() * penetration);
+			}
 
-			//box->setPosition(box->getPos() - plane->getNormal() * penetration);
+			box->applyForce(acceleration * mass0, localContact);
+			return true;
+
 		}
 	}
 
@@ -555,10 +606,31 @@ bool PhysicsScene::box2Sphere(PhysicsObject * ObjectA, PhysicsObject * ObjectB)
 				}
 
 				if (numContacts > 0) 
-				{ 
-					// average, and convert back into world coords 
-					contact = box->getPos() + (1.0f / numContacts) * (box->getLocalX() *contact.x + box->getLocalY()*contact.y); 
-					box->resolveCollision(sphere, contact, direction); 
+				{
+					// average, and convert back into world coords; 
+					contact = box->getPos() + (1.0f / numContacts) * (box->getLocalX() *contact.x + box->getLocalY()*contact.y);
+
+					// with the contact point we can find a penetration vector 
+					float pen = sphere->getRadius() - glm::length(contact - sphere->getPos());
+
+					glm::vec2 penVec = glm::normalize(contact - sphere->getPos()) * pen;
+
+					// move each shape away in the direction of penitration
+					if (!box->isKinematic() && !sphere->isKinematic())
+					{
+						//box->setPosition(box->getPos() + penVec * 0.5f);
+						//sphere->setPosition(sphere->getPos() - penVec * 0.5f);
+					}
+					else if (!box->isKinematic())
+					{
+						//box->setPosition(box->getPos() + penVec);
+					}
+					else
+					{
+						//sphere->setPosition(sphere->getPos() - penVec);
+					}
+
+					box->resolveCollision(sphere, contact, direction);
 				} 
 				
 				delete direction;
@@ -602,7 +674,21 @@ bool PhysicsScene::box2Box(PhysicsObject * ObjectA, PhysicsObject * ObjectB)
 		if (numContacts > 0) 
 		{ 
 			glm::vec2 contactForce = 0.5f*(contactForce1 - contactForce2); box1->setPosition(box1->getPos() - contactForce); 
-			//box2->setPosition(box2->getPos() + contactForce); 
+
+			if (!box1->isKinematic() && !box2->isKinematic())
+			{
+				//box1->setPosition(box1->getPos() + contactForce); 
+				//box2->setPosition(box2->getPos() + contactForce); 
+			}
+			else if(!box1->isKinematic())
+			{
+				//box1->setPosition(box1->getPos() + contactForce); 
+			}
+			else
+			{
+				//box2->setPosition(box2->getPos() + contactForce); 
+			}
+
 			box1->resolveCollision(box2, contact / float(numContacts), &normal); 
 			return true; 
 		}
