@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Phsics Classes">
+      <UniqueIdentifier>{ada14b0e-972b-4a74-abdd-de1516dd4d4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Managmeant">
+      <UniqueIdentifier>{8e717bf1-9d04-4cf6-8646-b2017aaf126e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Phsics Classes\Spahes">
+      <UniqueIdentifier>{6331cb8a-8df5-4dff-b6c4-821134ea1233}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsEngineApp.cpp">
+      <Filter>Game Managmeant</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLoop.cpp">
+      <Filter>Game Managmeant</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsScene.cpp">
+      <Filter>Phsics Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="RigidBody.cpp">
+      <Filter>Phsics Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="PhsicsObject.cpp">
+      <Filter>Phsics Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Circle.cpp">
+      <Filter>Phsics Classes\Spahes</Filter>
+    </ClCompile>
+    <ClCompile Include="Convex.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="PhysicsEngineApp.h">
+      <Filter>Game Managmeant</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLoop.h">
+      <Filter>Game Managmeant</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsScene.h">
+      <Filter>Phsics Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="RigidBody.h">
+      <Filter>Phsics Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="PhsicsObject.h">
+      <Filter>Phsics Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Circle.h">
+      <Filter>Phsics Classes\Spahes</Filter>
+    </ClInclude>
+    <ClInclude Include="Convex.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
